@@ -1,0 +1,31 @@
+/**
+ * app.js — Application entry point.
+ *
+ * Registers all page renderers and boots the app.
+ * To add a new page:
+ *   1. Add it to NAV_ITEMS in config.js
+ *   2. Create js/pages/yourpage.js with window.PAGES.yourpage = function() { ... }
+ *   3. Add the <script> tag to index.html
+ */
+
+// ── PAGE REGISTRY ─────────────────────────────────────────────────────────────
+// Each entry maps a page id → renderer function (defined in js/pages/*.js)
+window.PAGES = {
+  overview:  renderOverview,
+  robot:     renderRobot,
+  returns:   renderReturns,
+  tiers:     renderTiers,
+  questions: renderQuestions,
+  houston:   renderHouston,
+  week1:     renderWeek1,
+  roadmap:   renderRoadmap,
+};
+
+// ── BOOT ──────────────────────────────────────────────────────────────────────
+(function boot() {
+  // Render the sidebar navigation
+  window.renderNav();
+
+  // Load the default page
+  window.navigateTo('overview');
+})();

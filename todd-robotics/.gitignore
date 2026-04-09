@@ -1,0 +1,27 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Node (if ever used for local dev server)
+node_modules/
+npm-debug.log*
+
+# Sensitive / local-only
+.env
+.env.local
+secrets.*
+
+# Build artifacts (none yet, but future-proofing)
+dist/
+build/
+
+# Large binary assets — store externally or in Git LFS
+# investment-deck/js/robot-image.js is intentionally tracked
+# (base64 image is the asset, no external CDN needed)
