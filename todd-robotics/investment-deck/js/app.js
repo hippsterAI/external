@@ -19,6 +19,7 @@ window.PAGES = {
   week1:     renderWeek1,
   roadmap:   renderRoadmap,
   setup:     renderSetup,
+  usecases:  renderUsecases,
 };
 
 // ── BOOT ──────────────────────────────────────────────────────────────────────
