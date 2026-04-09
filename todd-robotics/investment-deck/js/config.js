@@ -19,172 +19,7 @@ window.SCENARIOS = [
   { label: 'Base', bookings: 6,  avgRev: 1800, opsCost: 600,  fleetGrow: 1, color: '#60a5fa', tagClass: 'b' },
   { label: 'Bull', bookings: 10, avgRev: 2200, opsCost: 800,  fleetGrow: 1, color: '#00e5a0', tagClass: 'g' },
   { label: 'Moon', bookings: 18, avgRev: 3000, opsCost: 1200, fleetGrow: 2, color: '#f59e0b', tagClass: 'gold' },
-  {
-    section: 'Hardware & Longevity',
-    questions: [
-      {
-        n: '16', q: 'Hardware goes out of date in 2-3 years — do our skill libraries survive?',
-        a: `<strong>Yes — and this is the whole point.</strong> Our libraries are written in Python and ROS2, not tied to any specific robot body. When Unitree releases G2 or G3, we port our skills in days, not months. The <span class="qgold">software is the asset</span> — the hardware is just the vehicle it runs on. We will swap robots every 2-3 years the same way you swap phones. The skill marketplace keeps earning regardless of which generation we're running.`,
-      },
-      {
-        n: '17', q: 'What happens to our investment when we upgrade hardware?',
-        a: `<strong>Hardware cost drops, skill value compounds.</strong> The G1 is $16K today. In 2 years the equivalent robot will be $8-10K with better specs — Unitree drops prices 30-40% per generation. Meanwhile our approved skill library is worth <span class="qgold">more</span> with each passing month because more developers are building on it. We budget hardware refresh as a line item — funded from operating revenue, not new capital.`,
-      },
-      {
-        n: '18', q: 'Are we locked into Unitree specifically?',
-        a: `No. Our stack runs on <strong>ROS2</strong> — the universal robotics operating system used by Boston Dynamics, Figure, Agility, and every serious humanoid manufacturer. If Unitree disappears tomorrow, we migrate to the next platform. The skill marketplace, the developer relationships, the approval process, the customer base — <span class="qgold">none of that lives on the robot</span>. That is the moat.`,
-      },
-    ],
-  },
-];
 
-// ── NAVIGATION STRUCTURE ─────────────────────────────────────────────────────
-window.NAV_ITEMS = [
-  { group: 'Start Here', items: [
-    { id: 'overview', icon: '◈', label: 'Overview'       },
-    { id: 'robot',    icon: '⬡', label: 'The Robot'      },
-    { id: 'returns',  icon: '$', label: 'Your Returns'   },
-  ]},
-  { group: 'The Business', items: [
-    { id: 'tiers',     icon: '▲', label: 'Revenue Tiers'  },
-    { id: 'questions', icon: '?', label: 'Your Questions' },
-    { id: 'houston',   icon: '◎', label: 'Houston Targets'},
-  ]},
-  { group: 'Execution', items: [
-    { id: 'week1',   icon: '→', label: 'Week 1 Plan' },
-    { id: 'roadmap', icon: '↗', label: 'Roadmap'      },
-    { id: 'setup',   icon: '⚙', label: 'G1 Setup Guide'},
-    { id: 'usecases',icon: '◉', label: 'Use Cases'     },
-  ]},
-];
-
-// ── HOUSTON TARGET SECTORS ───────────────────────────────────────────────────
-window.HOUSTON_SECTORS = [
-  {
-    icon: '🏨', title: 'Luxury Hotels — Tier 1 Targets',
-    targets: [
-      'The Post Oak Hotel',
-      'Four Seasons Houston',
-      'Hotel Granduca Houston',
-      'Thompson Houston — influencer crowd, goes viral',
-      'St. Regis, JW Marriott, Laura Hotel',
-    ],
-  },
-  {
-    icon: '🏥', title: "Texas Medical Center — World's Largest",
-    targets: [
-      'Houston Methodist — 8,400 employees',
-      'MD Anderson — 18,000 international patients/year',
-      'Memorial Hermann — 50,000+ ER visits/year',
-      'Texas Children\'s Hospital — #3 in US',
-      'TMC Innovation Hub — 400+ biotech startups',
-    ],
-  },
-  {
-    icon: '⚡', title: 'Energy Sector',
-    targets: [
-      'Shell USA Houston HQ',
-      'ExxonMobil Spring Campus — 10,000+ employees',
-      'ConocoPhillips Houston HQ',
-      'Halliburton Innovation Lab',
-      'Baker Hughes — $2B+ annual R&D spend',
-    ],
-  },
-  {
-    icon: '🏟', title: 'Venues + Events',
-    targets: [
-      'George R. Brown Convention Center — 2M sq ft',
-      'Space Center Houston — 2M visitors/year',
-      'The Galleria — 30M visitors/year',
-      'IAH George Bush Airport — 50M passengers/year',
-    ],
-  },
-];
-
-// ── WEEK 1 PLAN STEPS ────────────────────────────────────────────────────────
-window.WEEK1_STEPS = [
-  {
-    day: 'Day 1', title: 'Both Partners Commit', color: 'var(--accent)',
-    items: [
-      'Both confirm $8K each — $16K total',
-      '50/50 co-founder agreement',
-      'Peter calls RoboStore: 855-285-7626',
-      'Order Unitree G1 base',
-    ],
-  },
-  {
-    day: 'Day 2-3', title: 'Robot Ships — Peter Builds', color: 'var(--gold)',
-    items: [
-      'G1 ships from RoboStore NY same day',
-      'Peter preps COSA-lite integration',
-      'Draft Post Oak Hotel pilot email',
-      'Get event insurance quote ~$100/mo',
-    ],
-  },
-  {
-    day: 'Day 4-5', title: 'Robot Arrives — First Setup', color: 'var(--gold)',
-    items: [
-      'Unbox — film everything for social',
-      'Connect COSA-lite to G1 SDK',
-      'Program 3 reliable demo routines',
-      'Post arrival video to LinkedIn + TikTok',
-    ],
-  },
-  {
-    day: 'Day 6-7', title: 'First Bookings', color: 'var(--blue)',
-    items: [
-      'Send Post Oak free 2-week pilot offer',
-      'Book first 2 developer rental sessions $200-300/hr',
-      'Follow up with InnovationMap — press story',
-      'Text Sitepro contact — warm lead',
-    ],
-  },
-  {
-    day: 'Week 2', title: 'First Revenue', color: 'var(--purple)',
-    items: [
-      'Post Oak lobby pilot live — film 50+ interactions',
-      'First paid developer rental sessions',
-      'First corporate event booking $1,500-2,500',
-      'InnovationMap story live — Houston first mover',
-    ],
-  },
-];
-
-// ── 3-YEAR ROADMAP ───────────────────────────────────────────────────────────
-window.ROADMAP_PHASES = [
-  {
-    phase: 'Year 1 — Prove It', color: 'var(--accent)',
-    milestones: [
-      'Order G1 · arrives in 2 days · Peter integrates COSA-lite same week',
-      'Post Oak free 2-week pilot · film everything · InnovationMap press story',
-      '6-8 bookings/month · developer rental sessions live',
-      'Break-even Month 4 · Both partners recover $8K by Month 8-10',
-      'Skill submission portal built · first 10 external developers onboarded',
-    ],
-  },
-  {
-    phase: 'Year 2 — Scale It', color: 'var(--gold)',
-    milestones: [
-      '2nd robot from profits · Austin launch — Four Seasons, Fairmont, JW Marriott',
-      'Developer rental platform fully operational · 50+ approved libraries',
-      'Skill marketplace live · first licensing revenue flowing',
-      '$200-400K combined revenue · Both partners clearing $100K+',
-      'Dallas market entry · differentiate on software layer, not just events',
-    ],
-  },
-  {
-    phase: 'Year 3 — Own Texas', color: 'var(--purple)',
-    milestones: [
-      '8-10 robot fleet · Houston + Austin + Dallas',
-      'Skill marketplace national reach · licensing to operators in other states',
-      'COSA-lite SaaS layer — license cognitive OS to other operators',
-      '$1M+ combined revenue · Both partners in life-changing territory',
-      'Exit options: sell deployment biz · Unitree/LimX US distributor · SaaS license platform',
-    ],
-  },
-];
-
-// ── Q&A DATA ─────────────────────────────────────────────────────────────────
 window.QA_DATA = [
   {
     section: 'The robot',
@@ -263,6 +98,23 @@ window.QA_DATA = [
       {
         n: '15', q: "Is this just Peter's project — what does Todd actually build?",
         a: `<strong>Both build.</strong> Peter: hardware ops + cognitive/approval layer. Todd: platform development layer. $8K each. 50/50 ownership. Co-founder venture — not a passive investment.`,
+      },
+    ],
+  },
+  {
+    section: 'Hardware & Longevity',
+    questions: [
+      {
+        n: '16', q: 'Hardware goes out of date in 2-3 years — do our skill libraries survive?',
+        a: `<strong>Yes — and this is the whole point.</strong> Our libraries are written in Python and ROS2, not tied to any specific robot body. When Unitree releases G2 or G3, we port our skills in days, not months. The <span class="qgold">software is the asset</span> — the hardware is just the vehicle it runs on. We will swap robots every 2-3 years the same way you swap phones. The skill marketplace keeps earning regardless of which generation we're running.`,
+      },
+      {
+        n: '17', q: 'What happens to our investment when we upgrade hardware?',
+        a: `<strong>Hardware cost drops, skill value compounds.</strong> The G1 is $16K today. In 2 years the equivalent robot will be $8-10K with better specs — Unitree drops prices 30-40% per generation. Meanwhile our approved skill library is worth <span class="qgold">more</span> with each passing month because more developers are building on it. We budget hardware refresh as a line item — funded from operating revenue, not new capital.`,
+      },
+      {
+        n: '18', q: 'Are we locked into Unitree specifically?',
+        a: `No. Our stack runs on <strong>ROS2</strong> — the universal robotics operating system used by Boston Dynamics, Figure, Agility, and every serious humanoid manufacturer. If Unitree disappears tomorrow, we migrate to the next platform. The skill marketplace, the developer relationships, the approval process, the customer base — <span class="qgold">none of that lives on the robot</span>. That is the moat.`,
       },
     ],
   },
