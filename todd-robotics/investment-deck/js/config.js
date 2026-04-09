@@ -19,6 +19,23 @@ window.SCENARIOS = [
   { label: 'Base', bookings: 6,  avgRev: 1800, opsCost: 600,  fleetGrow: 1, color: '#60a5fa', tagClass: 'b' },
   { label: 'Bull', bookings: 10, avgRev: 2200, opsCost: 800,  fleetGrow: 1, color: '#00e5a0', tagClass: 'g' },
   { label: 'Moon', bookings: 18, avgRev: 3000, opsCost: 1200, fleetGrow: 2, color: '#f59e0b', tagClass: 'gold' },
+  {
+    section: 'Hardware & Longevity',
+    questions: [
+      {
+        n: '16', q: 'Hardware goes out of date in 2-3 years — do our skill libraries survive?',
+        a: `<strong>Yes — and this is the whole point.</strong> Our libraries are written in Python and ROS2, not tied to any specific robot body. When Unitree releases G2 or G3, we port our skills in days, not months. The <span class="qgold">software is the asset</span> — the hardware is just the vehicle it runs on. We will swap robots every 2-3 years the same way you swap phones. The skill marketplace keeps earning regardless of which generation we're running.`,
+      },
+      {
+        n: '17', q: 'What happens to our investment when we upgrade hardware?',
+        a: `<strong>Hardware cost drops, skill value compounds.</strong> The G1 is $16K today. In 2 years the equivalent robot will be $8-10K with better specs — Unitree drops prices 30-40% per generation. Meanwhile our approved skill library is worth <span class="qgold">more</span> with each passing month because more developers are building on it. We budget hardware refresh as a line item — funded from operating revenue, not new capital.`,
+      },
+      {
+        n: '18', q: 'Are we locked into Unitree specifically?',
+        a: `No. Our stack runs on <strong>ROS2</strong> — the universal robotics operating system used by Boston Dynamics, Figure, Agility, and every serious humanoid manufacturer. If Unitree disappears tomorrow, we migrate to the next platform. The skill marketplace, the developer relationships, the approval process, the customer base — <span class="qgold">none of that lives on the robot</span>. That is the moat.`,
+      },
+    ],
+  },
 ];
 
 // ── NAVIGATION STRUCTURE ─────────────────────────────────────────────────────
