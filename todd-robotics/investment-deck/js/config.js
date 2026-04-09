@@ -35,7 +35,8 @@ window.NAV_ITEMS = [
   ]},
   { group: 'Execution', items: [
     { id: 'week1',   icon: '→', label: 'Week 1 Plan' },
-    { id: 'roadmap', icon: '↗', label: 'Roadmap'     },
+    { id: 'roadmap', icon: '↗', label: 'Roadmap'      },
+    { id: 'setup',   icon: '⚙', label: 'G1 Setup Guide'},
   ]},
 ];
 

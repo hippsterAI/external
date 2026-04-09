@@ -9,7 +9,6 @@
  */
 
 // ── PAGE REGISTRY ─────────────────────────────────────────────────────────────
-// Each entry maps a page id → renderer function (defined in js/pages/*.js)
 window.PAGES = {
   overview:  renderOverview,
   robot:     renderRobot,
@@ -19,13 +18,11 @@ window.PAGES = {
   houston:   renderHouston,
   week1:     renderWeek1,
   roadmap:   renderRoadmap,
+  setup:     renderSetup,
 };
 
 // ── BOOT ──────────────────────────────────────────────────────────────────────
 (function boot() {
-  // Render the sidebar navigation
   window.renderNav();
-
-  // Load the default page
   window.navigateTo('overview');
 })();
