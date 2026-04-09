@@ -1,0 +1,24 @@
+# Credentials — NEVER commit
+*.env
+.env
+*_secrets.py
+*client_secret*
+credentials.json
+config_local.py
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Data — no real data in repo
+*.csv
+*.xlsx
+*.mdf
+*.ldf
+*.log

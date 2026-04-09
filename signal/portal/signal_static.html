@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SIGNAL · Luminara Community College</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap');
+
+:root {
+  --bg: #f8f7f4;
+  --ink: #0e0e0e;
+  --dim: #888880;
+  --rule: #e8e6e0;
+  --surface: #ffffff;
+  --red: #d63031;
+  --amber: #e17055;
+  --green: #00b894;
+  --blue: #0984e3;
+  --gold: #c8a84b;
+  --signal: #0e0e0e;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+}
+
+/* ── HEADER ── */
+.header {
+  background: var(--ink);
+  padding: 0 40px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hbrand {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.hlogo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px;
+  letter-spacing: 0.08em;
+  color: #ffffff;
+}
+
+.hcollege {
+  font-size: 11px;
+  color: #888;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.hright {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.live-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--green);
+  letter-spacing: 0.08em;
+}
+
+.live-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 8px var(--green);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%,100%{opacity:1} 50%{opacity:.3}
+}
+
+.htime {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: #666;
+}
+
+/* ── PAGE ── */
+.page { max-width: 1320px; margin: 0 auto; padding: 32px 40px 80px; }
+
+/* ── PULSE ROW ── */
+.pulse-row {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 2px;
+  margin-bottom: 32px;
+  background: var(--ink);
+  border: 2px solid var(--ink);
+}
+
+.pulse-card {
+  background: var(--surface);
+  padding: 20px 18px;
+  cursor: pointer;
+  transition: background 0.15s;
+  position: relative;
+}
+
+.pulse-card:hover { background: #fafaf8; }
+
+.pulse-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+}
+
+.pulse-card.red::after { background: var(--red); }
+.pulse-card.amber::after { background: var(--amber); }
+.pulse-card.green::after { background: var(--green); }
+.pulse-card.blue::after { background: var(--blue); }
+
+.pc-domain {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-bottom: 10px;
+}
+
+.pc-value {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 42px;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.pc-value.red { color: var(--red); }
+.pc-value.amber { color: var(--amber); }
+.pc-value.green { color: var(--green); }
+.pc-value.blue { color: var(--blue); }
+.pc-value.ink { color: var(--ink); }
+
+.pc-label {
+  font-size: 11px;
+  color: var(--dim);
+  line-height: 1.4;
+}
+
+/* ── MAIN GRID ── */
+.main-grid {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+/* ── SIGNAL FEED ── */
+.signal-feed { }
+
+.sf-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.sf-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+}
+
+.sf-count {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--dim);
+  letter-spacing: 0.08em;
+}
+
+.signal-item {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-left: 4px solid;
+  padding: 16px 18px;
+  margin-bottom: 8px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.signal-item:hover {
+  transform: translateX(2px);
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+.signal-item.red { border-left-color: var(--red); }
+.signal-item.amber { border-left-color: var(--amber); }
+.signal-item.green { border-left-color: var(--green); }
+.signal-item.blue { border-left-color: var(--blue); }
+
+.si-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.si-body { flex: 1; }
+
+.si-msg {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.4;
+  margin-bottom: 4px;
+}
+
+.si-meta {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--dim);
+  letter-spacing: 0.04em;
+}
+
+.si-action {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--blue);
+  flex-shrink: 0;
+  align-self: center;
+  letter-spacing: 0.04em;
+}
+
+/* ── RIGHT PANEL ── */
+.right-panel { display: flex; flex-direction: column; gap: 20px; }
+
+/* ── ASK BOX ── */
+.ask-box {
+  background: var(--ink);
+  padding: 24px;
+}
+
+.ask-label {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  letter-spacing: 0.08em;
+  color: #ffffff;
+  margin-bottom: 4px;
+}
+
+.ask-sub {
+  font-size: 11px;
+  color: #666;
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+.ask-input {
+  width: 100%;
+  background: #1e1e1e;
+  border: 1px solid #333;
+  color: #ffffff;
+  padding: 12px 14px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  outline: none;
+  margin-bottom: 8px;
+  resize: none;
+  height: 72px;
+}
+
+.ask-input:focus { border-color: var(--green); }
+.ask-input::placeholder { color: #444; }
+
+.ask-btn {
+  width: 100%;
+  background: var(--green);
+  border: none;
+  color: var(--ink);
+  padding: 11px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 16px;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.ask-btn:hover { background: #00d2a8; }
+
+.ask-response {
+  margin-top: 14px;
+  padding: 14px;
+  background: #111;
+  border-left: 3px solid var(--green);
+  font-size: 13px;
+  color: #ccc;
+  line-height: 1.7;
+  display: none;
+  min-height: 60px;
+}
+
+.ask-response.show { display: block; }
+
+.ask-thinking {
+  display: none;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--green);
+  letter-spacing: 0.08em;
+  margin-top: 8px;
+  animation: blink 1s infinite;
+}
+
+.ask-thinking.show { display: block; }
+
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
+
+/* ── QUICK STATS ── */
+.quick-stats {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  padding: 20px;
+}
+
+.qs-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 16px;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.qs-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--rule);
+  font-size: 12px;
+}
+
+.qs-item:last-child { border-bottom: none; }
+.qs-label { color: var(--dim); }
+.qs-val { font-weight: 500; font-family: 'DM Mono', monospace; }
+.qs-val.red { color: var(--red); }
+.qs-val.green { color: var(--green); }
+.qs-val.amber { color: var(--amber); }
+
+/* ── BOTTOM GRID ── */
+.bottom-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 24px;
+}
+
+.mini-panel {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  padding: 20px;
+}
+
+.mp-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 16px;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mp-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  padding: 2px 7px;
+  letter-spacing: 0.06em;
+}
+
+.mp-badge.red { background: #fff0f0; color: var(--red); }
+.mp-badge.green { background: #f0fff9; color: var(--green); }
+.mp-badge.amber { background: #fff8f0; color: var(--amber); }
+
+.mp-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--rule);
+  font-size: 12px;
+}
+
+.mp-row:last-child { border-bottom: none; }
+.mp-name { color: var(--ink); font-weight: 400; }
+.mp-val { font-family: 'DM Mono', monospace; font-size: 11px; }
+.mp-val.red { color: var(--red); }
+.mp-val.green { color: var(--green); }
+.mp-val.amber { color: var(--amber); }
+.mp-val.dim { color: var(--dim); }
+
+/* ── FOOTER ── */
+.footer {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid var(--rule);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.footer-brand {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 20px;
+  letter-spacing: 0.1em;
+  color: var(--ink);
+}
+
+.footer-sub {
+  font-size: 11px;
+  color: var(--dim);
+  margin-top: 2px;
+}
+
+.footer-stack {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.stack-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  background: var(--ink);
+  color: #fff;
+  padding: 3px 8px;
+}
+
+/* ── SYSTEM STATUS BAR ── */
+.system-bar {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.sys-pill {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  padding: 5px 10px;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  color: var(--dim);
+}
+
+.sys-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+}
+
+.sys-dot.green { background: var(--green); }
+.sys-dot.amber { background: var(--amber); }
+.sys-dot.red { background: var(--red); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="hbrand">
+    <div class="hlogo">SIGNAL</div>
+    <div class="hcollege">Luminara Community College · Intelligence Platform</div>
+  </div>
+  <div class="hright">
+    <div class="live-pill"><div class="live-dot"></div>LIVE</div>
+    <div class="htime" id="clock">--:-- --</div>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- PULSE ROW -->
+  <div class="pulse-row">
+    <div class="pulse-card amber">
+      <div class="pc-domain">Enrollment</div>
+      <div class="pc-value amber">4,847</div>
+      <div class="pc-label">↓ 6.2% vs last term<br>3 programs at risk</div>
+    </div>
+    <div class="pulse-card red">
+      <div class="pc-domain">At-Risk Students</div>
+      <div class="pc-value red">127</div>
+      <div class="pc-label">Flagged this week<br>Needs intervention</div>
+    </div>
+    <div class="pulse-card green">
+      <div class="pc-domain">Budget Health</div>
+      <div class="pc-value green">82%</div>
+      <div class="pc-label">FY26 on track<br>$2.1M remaining</div>
+    </div>
+    <div class="pulse-card red">
+      <div class="pc-domain">Staff Vacancies</div>
+      <div class="pc-value red">14</div>
+      <div class="pc-label">Open positions<br>4 critical programs</div>
+    </div>
+    <div class="pulse-card green">
+      <div class="pc-domain">Donor Pipeline</div>
+      <div class="pc-value green">$847K</div>
+      <div class="pc-label">Active pledges<br>12 prospects warm</div>
+    </div>
+    <div class="pulse-card amber">
+      <div class="pc-domain">Systems</div>
+      <div class="pc-value amber">9</div>
+      <div class="pc-label">Licenses expiring<br>$746K at risk</div>
+    </div>
+  </div>
+
+  <!-- SYSTEM BAR -->
+  <div class="system-bar">
+    <div class="sys-pill"><div class="sys-dot green"></div>ELLUCIAN BANNER</div>
+    <div class="sys-pill"><div class="sys-dot green"></div>WORKDAY HCM</div>
+    <div class="sys-pill"><div class="sys-dot green"></div>BRIGHTSPACE LMS</div>
+    <div class="sys-pill"><div class="sys-dot amber"></div>SALESFORCE CRM</div>
+    <div class="sys-pill"><div class="sys-dot green"></div>SERVICENOW ITSM</div>
+    <div class="sys-pill"><div class="sys-dot green"></div>SQL SERVER · LCC-SQL-PROD01</div>
+    <div class="sys-pill"><div class="sys-dot green"></div>DATA WAREHOUSE · LCC-DWH-PROD</div>
+    <div class="sys-pill"><div class="sys-dot amber"></div>RAISER'S EDGE · SYNC 4H AGO</div>
+  </div>
+
+  <!-- MAIN GRID -->
+  <div class="main-grid">
+
+    <!-- SIGNAL FEED -->
+    <div class="signal-feed">
+      <div class="sf-header">
+        <div class="sf-title">TODAY'S SIGNALS</div>
+        <div class="sf-count">WEDNESDAY · APRIL 8 · 12 ACTIVE</div>
+      </div>
+
+      <div class="signal-item red">
+        <div class="si-icon">🔴</div>
+        <div class="si-body">
+          <div class="si-msg">Nursing program enrollment down 14% — 47 students waitlisted, 3 sections cancelled due to instructor vacancy</div>
+          <div class="si-meta">ENROLLMENT · BANNER · Updated 6 min ago</div>
+        </div>
+        <div class="si-action">ACT NOW →</div>
+      </div>
+
+      <div class="signal-item red">
+        <div class="si-icon">🔴</div>
+        <div class="si-body">
+          <div class="si-msg">127 students flagged at-risk this week — GPA below 2.0, 3+ absences, or financial hold. Intervention window closing.</div>
+          <div class="si-meta">STUDENT SUCCESS · BRIGHTSPACE + BANNER · Updated 1 hr ago</div>
+        </div>
+        <div class="si-action">VIEW LIST →</div>
+      </div>
+
+      <div class="signal-item amber">
+        <div class="si-icon">🟠</div>
+        <div class="si-body">
+          <div class="si-msg">WEBex Contact Center license expires in 73 days — $188K renewal requires VP approval. No PO initiated.</div>
+          <div class="si-meta">LICENSE CONTROL · SERVICENOW · Updated 2 hr ago</div>
+        </div>
+        <div class="si-action">START PO →</div>
+      </div>
+
+      <div class="signal-item amber">
+        <div class="si-icon">🟠</div>
+        <div class="si-body">
+          <div class="si-msg">14 open staff positions — 4 in critical programs (Nursing x2, IT x1, Welding x1). Average vacancy age: 47 days.</div>
+          <div class="si-meta">HUMAN RESOURCES · WORKDAY · Updated 3 hr ago</div>
+        </div>
+        <div class="si-action">REVIEW →</div>
+      </div>
+
+      <div class="signal-item amber">
+        <div class="si-icon">🟠</div>
+        <div class="si-body">
+          <div class="si-msg">Salesforce CRM sync delayed 4+ hours — donor pipeline data may be stale. 3 prospect follow-ups overdue.</div>
+          <div class="si-meta">DONOR RELATIONS · SALESFORCE · Updated 4 hr ago</div>
+        </div>
+        <div class="si-action">CHECK →</div>
+      </div>
+
+      <div class="signal-item blue">
+        <div class="si-icon">🔵</div>
+        <div class="si-body">
+          <div class="si-msg">Spring registration opens in 18 days — Welding and HVAC sections already at 94% capacity. Consider adding sections.</div>
+          <div class="si-meta">ENROLLMENT PLANNING · BANNER · Updated 1 hr ago</div>
+        </div>
+        <div class="si-action">PLAN →</div>
+      </div>
+
+      <div class="signal-item blue">
+        <div class="si-icon">🔵</div>
+        <div class="si-body">
+          <div class="si-msg">$847K in active donor pledges — 12 prospects in warm stage. Martha Chen ($150K) last contacted 22 days ago.</div>
+          <div class="si-meta">FOUNDATION · RAISER'S EDGE · Updated 4 hr ago</div>
+        </div>
+        <div class="si-action">CONTACT →</div>
+      </div>
+
+      <div class="signal-item green">
+        <div class="si-icon">🟢</div>
+        <div class="si-body">
+          <div class="si-msg">Cybersecurity program enrollment up 31% year-over-year — highest growth program. Instructor capacity fully utilized.</div>
+          <div class="si-meta">ENROLLMENT TREND · BANNER · Updated 1 hr ago</div>
+        </div>
+        <div class="si-action">EXPAND? →</div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT PANEL -->
+    <div class="right-panel">
+
+      <!-- ASK BOX -->
+      <div class="ask-box">
+        <div class="ask-label">ASK SIGNAL</div>
+        <div class="ask-sub">Ask any question about Luminara. Signal reads every system and answers in plain English.</div>
+        <textarea class="ask-input" id="askInput" placeholder="Why is enrollment down in nursing?&#10;Which programs need attention?&#10;What's our biggest risk this week?"></textarea>
+        <button class="ask-btn" onclick="askSignal()">GET ANSWER</button>
+        <div class="ask-thinking" id="askThinking">SIGNAL IS THINKING...</div>
+        <div class="ask-response" id="askResponse"></div>
+      </div>
+
+      <!-- QUICK STATS -->
+      <div class="quick-stats">
+        <div class="qs-title">INSTITUTION SNAPSHOT</div>
+        <div class="qs-item"><span class="qs-label">Total enrollment</span><span class="qs-val">4,847</span></div>
+        <div class="qs-item"><span class="qs-label">Full-time students</span><span class="qs-val green">62%</span></div>
+        <div class="qs-item"><span class="qs-label">Retention rate</span><span class="qs-val amber">71%</span></div>
+        <div class="qs-item"><span class="qs-label">Completion rate</span><span class="qs-val amber">54%</span></div>
+        <div class="qs-item"><span class="qs-label">FY26 budget utilized</span><span class="qs-val green">44%</span></div>
+        <div class="qs-item"><span class="qs-label">Open financial aid apps</span><span class="qs-val amber">312</span></div>
+        <div class="qs-item"><span class="qs-label">Active programs</span><span class="qs-val">47</span></div>
+        <div class="qs-item"><span class="qs-label">Faculty headcount</span><span class="qs-val">284</span></div>
+        <div class="qs-item"><span class="qs-label">Staff headcount</span><span class="qs-val">198</span></div>
+        <div class="qs-item"><span class="qs-label">Systems monitored</span><span class="qs-val green">8</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- BOTTOM GRID -->
+  <div class="bottom-grid">
+
+    <!-- ENROLLMENT BY PROGRAM -->
+    <div class="mini-panel">
+      <div class="mp-title">
+        TOP PROGRAMS
+        <span class="mp-badge amber">3 AT RISK</span>
+      </div>
+      <div class="mp-row"><span class="mp-name">Cybersecurity</span><span class="mp-val green">↑ 31%</span></div>
+      <div class="mp-row"><span class="mp-name">Medical Assisting</span><span class="mp-val green">↑ 12%</span></div>
+      <div class="mp-row"><span class="mp-name">Welding Technology</span><span class="mp-val green">↑ 8%</span></div>
+      <div class="mp-row"><span class="mp-name">Business Admin</span><span class="mp-val dim">→ 0%</span></div>
+      <div class="mp-row"><span class="mp-name">Liberal Arts</span><span class="mp-val amber">↓ 4%</span></div>
+      <div class="mp-row"><span class="mp-name">Nursing</span><span class="mp-val red">↓ 14%</span></div>
+      <div class="mp-row"><span class="mp-name">Criminal Justice</span><span class="mp-val red">↓ 9%</span></div>
+    </div>
+
+    <!-- FINANCIAL SNAPSHOT -->
+    <div class="mini-panel">
+      <div class="mp-title">
+        FINANCIAL HEALTH
+        <span class="mp-badge green">ON TRACK</span>
+      </div>
+      <div class="mp-row"><span class="mp-name">FY26 Total Budget</span><span class="mp-val">$28.4M</span></div>
+      <div class="mp-row"><span class="mp-name">Spent to Date</span><span class="mp-val green">$12.5M</span></div>
+      <div class="mp-row"><span class="mp-name">Remaining</span><span class="mp-val green">$15.9M</span></div>
+      <div class="mp-row"><span class="mp-name">Grant Funding Active</span><span class="mp-val green">$3.2M</span></div>
+      <div class="mp-row"><span class="mp-name">Software at Risk</span><span class="mp-val amber">$746K</span></div>
+      <div class="mp-row"><span class="mp-name">Deferred Maintenance</span><span class="mp-val amber">$1.1M</span></div>
+      <div class="mp-row"><span class="mp-name">Donor Pledges Active</span><span class="mp-val green">$847K</span></div>
+    </div>
+
+    <!-- STUDENT SUCCESS -->
+    <div class="mini-panel">
+      <div class="mp-title">
+        STUDENT SUCCESS
+        <span class="mp-badge red">127 AT RISK</span>
+      </div>
+      <div class="mp-row"><span class="mp-name">Total enrolled</span><span class="mp-val">4,847</span></div>
+      <div class="mp-row"><span class="mp-name">GPA below 2.0</span><span class="mp-val red">89</span></div>
+      <div class="mp-row"><span class="mp-name">3+ absences flagged</span><span class="mp-val amber">214</span></div>
+      <div class="mp-row"><span class="mp-name">Financial hold</span><span class="mp-val amber">67</span></div>
+      <div class="mp-row"><span class="mp-name">Advisor assigned</span><span class="mp-val green">81%</span></div>
+      <div class="mp-row"><span class="mp-name">On track to graduate</span><span class="mp-val green">3,841</span></div>
+      <div class="mp-row"><span class="mp-name">Dropped this term</span><span class="mp-val red">43</span></div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div>
+      <div class="footer-brand">SIGNAL</div>
+      <div class="footer-sub">Luminara Community College · Intelligence Platform · builtindays.co · All data simulated for portfolio demonstration</div>
+    </div>
+    <div class="footer-stack">
+      <span class="stack-tag">SQL SERVER</span>
+      <span class="stack-tag">PYTHON</span>
+      <span class="stack-tag">CLAUDE API</span>
+      <span class="stack-tag">ELLUCIAN BANNER</span>
+      <span class="stack-tag">WORKDAY</span>
+      <span class="stack-tag">BRIGHTSPACE</span>
+      <span class="stack-tag">SALESFORCE</span>
+      <span class="stack-tag">SERVICENOW</span>
+      <span class="stack-tag">RAISER'S EDGE</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// Clock
+function updateClock(){
+  const n=new Date();
+  document.getElementById('clock').textContent=n.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+}
+setInterval(updateClock,1000);
+updateClock();
+
+// ASK SIGNAL — Claude API powered
+async function askSignal() {
+  const input = document.getElementById('askInput').value.trim();
+  if (!input) return;
+
+  const thinking = document.getElementById('askThinking');
+  const response = document.getElementById('askResponse');
+
+  thinking.classList.add('show');
+  response.classList.remove('show');
+  response.textContent = '';
+
+  const context = `You are SIGNAL, the intelligence platform for Luminara Community College. 
+You have access to all institutional data. Current snapshot:
+- Enrollment: 4,847 students (down 6.2% vs last term)
+- At-risk students: 127 flagged this week
+- Staff vacancies: 14 open positions (4 critical)
+- Budget: $28.4M FY26, 44% utilized, $15.9M remaining
+- Software licenses: 9 expiring, $746K at risk
+- Donor pipeline: $847K active pledges
+- Top growing program: Cybersecurity (+31%)
+- Declining program: Nursing (-14%, 3 sections cancelled, 47 waitlisted)
+- Systems: Ellucian Banner, Workday HCM, Brightspace LMS, Salesforce CRM, ServiceNow, Raiser's Edge
+- Retention rate: 71%, Completion rate: 54%
+
+Answer the chancellor's question in plain English. Be specific, data-driven, and actionable. 
+Keep response under 120 words. Lead with the most important finding. End with one clear recommended action.`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: context,
+        messages: [{ role: 'user', content: input }]
+      })
+    });
+
+    const data = await res.json();
+    const text = data.content?.[0]?.text || 'Unable to get response.';
+
+    thinking.classList.remove('show');
+    response.textContent = text;
+    response.classList.add('show');
+
+  } catch(e) {
+    thinking.classList.remove('show');
+    response.textContent = 'Signal is temporarily unavailable. Check API connection.';
+    response.classList.add('show');
+  }
+}
+
+// Enter key submits
+document.getElementById('askInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    askSignal();
+  }
+});
+
+// Simulate live data flicker
+setInterval(() => {
+  const cards = document.querySelectorAll('.pc-value');
+  const idx = Math.floor(Math.random() * cards.length);
+}, 12000);
+</script>
+
+</body>
+</html>
