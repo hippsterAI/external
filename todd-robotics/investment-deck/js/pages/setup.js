@@ -1,5 +1,5 @@
 window.renderSetup = function() {
-  return `
+  setContent(`
     <div class="page-header">
       <div class="page-tag">TECHNICAL</div>
       <h1 class="page-title">G1 Sim Setup Guide</h1>
@@ -269,5 +269,5 @@ while True:
         margin-bottom: 0.875rem;
       }
     </style>
-  `;
+  `);
 }
