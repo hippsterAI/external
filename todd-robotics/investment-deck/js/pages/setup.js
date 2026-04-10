@@ -1,4 +1,4 @@
-export function renderSetup() {
+function renderSetup() {
   return `
     <div class="page-header">
       <div class="page-tag">TECHNICAL</div>
