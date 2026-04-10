@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>G1 Control Center — Unitree Robotics</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap');
+  :root {
+    --bg: #080c10; --panel: #0e1520; --accent: #00d4ff; --accent2: #00ff9f;
+    --accent3: #ff6b35; --warn: #ffcc00; --border: rgba(0,212,255,0.2);
+    --border2: rgba(0,212,255,0.08); --text: #c8d8e8; --text2: #6a8aa0;
+    --danger: #ff4444; --glow: 0 0 12px rgba(0,212,255,0.4);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-serif; min-height: 100vh; user-select: none; }
+  body::before { content: ''; position: fixed; inset: 0; background: repeating-linear-gradient(0deg,transparent,transparent 40px,rgba(0,212,255,0.02) 40px,rgba(0,212,255,0.02) 41px),repeating-linear-gradient(90deg,transparent,transparent 40px,rgba(0,212,255,0.02) 40px,rgba(0,212,255,0.02) 41px); pointer-events: none; z-index: 0; }
+  .header { position: relative; z-index: 10; display: flex; align-items: center; justify-content: space-between; padding: 14px 28px; background: linear-gradient(90deg,rgba(0,212,255,0.08),transparent); border-bottom: 1px solid var(--border); }
+  .logo { display: flex; align-items: center; gap: 14px; }
+  .logo-icon { width: 36px; height: 36px; border: 1.5px solid var(--accent); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-family: 'Orbitron',monospace; font-size: 13px; font-weight: 700; color: var(--accent); box-shadow: var(--glow); }
+  .logo-text { font-family: 'Orbitron',monospace; font-size: 18px; font-weight: 700; color: var(--accent); letter-spacing: 2px; text-shadow: 0 0 20px rgba(0,212,255,0.5); }
+  .logo-sub { font-family: 'Share Tech Mono',monospace; font-size: 11px; color: var(--text2); letter-spacing: 1px; }
+  .header-right { display: flex; align-items: center; gap: 20px; }
+  .status-pill { display: flex; align-items: center; gap: 7px; padding: 5px 14px; border-radius: 20px; border: 1px solid var(--border); font-family: 'Share Tech Mono',monospace; font-size: 12px; letter-spacing: 1px; background: rgba(0,212,255,0.05); }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--text2); }
+  .dot.active { background: var(--accent2); box-shadow: 0 0 8px var(--accent2); animation: pulse 1.5s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  .time-display { font-family: 'Share Tech Mono',monospace; font-size: 13px; color: var(--text2); letter-spacing: 1px; }
+  .main { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; padding: 16px 20px; max-width: 1200px; margin: 0 auto; }
+  .panel { background: var(--panel); border: 1px solid var(--border2); border-radius: 8px; overflow: hidden; position: relative; }
+  .panel::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg,transparent,var(--accent),transparent); opacity: 0.5; }
+  .panel-header { padding: 10px 16px; border-bottom: 1px solid var(--border2); display: flex; align-items: center; justify-content: space-between; background: rgba(0,212,255,0.03); }
+  .panel-title { font-family: 'Orbitron',monospace; font-size: 10px; font-weight: 700; letter-spacing: 2px; color: var(--accent); text-transform: uppercase; }
+  .panel-badge { font-family: 'Share Tech Mono',monospace; font-size: 10px; color: var(--text2); letter-spacing: 1px; }
+  .panel-body { padding: 14px; }
+  .mode-display { background: rgba(0,0,0,0.4); border: 1px solid var(--border); border-radius: 6px; padding: 12px; text-align: center; margin-bottom: 10px; }
+  .mode-label { font-family: 'Share Tech Mono',monospace; font-size: 9px; color: var(--text2); letter-spacing: 2px; margin-bottom: 6px; }
+  .mode-value { font-family: 'Orbitron',monospace; font-size: 22px; font-weight: 900; color: var(--accent2); letter-spacing: 4px; text-shadow: 0 0 20px rgba(0,255,159,0.6); }
+  .mode-value.idle { color: var(--text2); text-shadow: none; }
+  .mode-value.stand { color: var(--warn); text-shadow: 0 0 20px rgba(255,204,0,0.6); }
+  .log-area { background: rgba(0,0,0,0.4); border: 1px solid var(--border2); border-radius: 4px; padding: 10px; height: 160px; overflow-y: auto; font-family: 'Share Tech Mono',monospace; font-size: 11px; line-height: 1.6; scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
+  .log-entry { color: var(--text2); }
+  .log-entry.log-ok { color: var(--accent2); }
+  .log-entry.log-cmd { color: var(--accent); }
+  .log-entry.log-err { color: var(--danger); }
+  .log-ts { color: rgba(100,140,160,0.5); margin-right: 6px; }
+  .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 14px; }
+  .action-btn { padding: 18px 8px; background: rgba(0,255,159,0.06); border: 1px solid rgba(0,255,159,0.2); border-radius: 8px; color: var(--accent2); font-family: 'Rajdhani',sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 1px; cursor: pointer; text-align: center; transition: all 0.15s; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+  .action-btn:hover { background: rgba(0,255,159,0.18); border-color: var(--accent2); box-shadow: 0 0 16px rgba(0,255,159,0.4); transform: translateY(-1px); }
+  .action-btn.orange { background: rgba(255,107,53,0.06); border-color: rgba(255,107,53,0.2); color: var(--accent3); }
+  .action-btn.orange:hover { background: rgba(255,107,53,0.18); border-color: var(--accent3); box-shadow: 0 0 16px rgba(255,107,53,0.4); }
+  .action-btn.blue { background: rgba(0,212,255,0.06); border-color: rgba(0,212,255,0.2); color: var(--accent); }
+  .action-btn.blue:hover { background: rgba(0,212,255,0.18); border-color: var(--accent); box-shadow: 0 0 16px rgba(0,212,255,0.4); }
+  .action-btn.red { background: rgba(255,68,68,0.06); border-color: rgba(255,68,68,0.2); color: var(--danger); }
+  .action-btn.red:hover { background: rgba(255,68,68,0.18); border-color: var(--danger); box-shadow: 0 0 16px rgba(255,68,68,0.4); }
+  .action-btn.active { animation: btn-pulse 0.6s ease-in-out infinite; }
+  @keyframes btn-pulse { 0%,100%{box-shadow:0 0 8px rgba(0,255,159,0.3)} 50%{box-shadow:0 0 24px rgba(0,255,159,0.8)} }
+  .btn-icon { font-size: 24px; line-height: 1; }
+  .btn-sub { font-family: 'Share Tech Mono',monospace; font-size: 9px; color: var(--text2); }
+  .start-btn { width: 100%; padding: 14px; background: linear-gradient(135deg,rgba(0,212,255,0.15),rgba(0,255,159,0.08)); border: 1px solid var(--accent); border-radius: 6px; color: var(--accent); font-family: 'Orbitron',monospace; font-size: 13px; font-weight: 700; letter-spacing: 3px; cursor: pointer; text-align: center; transition: all 0.2s; margin-bottom: 8px; }
+  .start-btn:hover { box-shadow: 0 0 24px rgba(0,212,255,0.4); }
+  .kill-btn { width: 100%; padding: 10px; background: rgba(255,68,68,0.08); border: 1px solid rgba(255,68,68,0.3); border-radius: 6px; color: var(--danger); font-family: 'Orbitron',monospace; font-size: 11px; font-weight: 700; letter-spacing: 2px; cursor: pointer; transition: all 0.2s; }
+  .kill-btn:hover { background: rgba(255,68,68,0.2); border-color: var(--danger); box-shadow: 0 0 16px rgba(255,68,68,0.4); }
+  .active-label { font-family: 'Orbitron',monospace; font-size: 18px; color: var(--accent); letter-spacing: 2px; padding: 10px 14px 4px; }
+  .active-sub { font-family: 'Share Tech Mono',monospace; font-size: 11px; color: var(--text2); padding: 0 14px 14px; }
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">
+    <div class="logo-icon">G1</div>
+    <div>
+      <div class="logo-text">UNITREE G1 — 29DOF</div>
+      <div class="logo-sub">UNITREE ROBOTICS · SDK2 · unitree-g1-mujoco · PORT 8765</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="status-pill">
+      <div class="dot" id="conn-dot"></div>
+      <span id="conn-status">CONNECTING...</span>
+    </div>
+    <div class="time-display" id="clock">--:--:--</div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- LEFT: Status + Log -->
+  <div style="display:flex;flex-direction:column;gap:16px;">
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">System State</span>
+        <span class="panel-badge" id="uptime">T+00:00</span>
+      </div>
+      <div class="panel-body">
+        <div class="mode-display">
+          <div class="mode-label">ACTIVE MOVE</div>
+          <div class="mode-value stand" id="mode-val">STAND</div>
+        </div>
+        <button class="start-btn" onclick="sendMove('stand')">◉ RESET TO STAND</button>
+        <button class="kill-btn" onclick="sendMove('stop')">✕ EMERGENCY STOP</button>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">Command Log</span>
+        <span class="panel-badge" id="log-count">0 CMDS</span>
+      </div>
+      <div class="panel-body" style="padding:10px;">
+        <div class="log-area" id="log-area">
+          <div class="log-entry"><span class="log-ts">[--:--:--]</span>Connecting to robot server...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CENTER: Main move buttons -->
+  <div class="panel">
+    <div class="panel-header">
+      <span class="panel-title">Preprogrammed Moves</span>
+      <span class="panel-badge">CLICK = EXECUTE</span>
+    </div>
+    <div id="active-label" class="active-label">STANDBY</div>
+    <div id="active-sub" class="active-sub">Click any button to move the robot</div>
+    <div class="action-grid">
+      <button class="action-btn blue" id="btn-stand" onclick="sendMove('stand')">
+        <span class="btn-icon">🧍</span>STAND
+        <span class="btn-sub">Neutral pose</span>
+      </button>
+      <button class="action-btn" id="btn-wave_r" onclick="sendMove('wave_r')">
+        <span class="btn-icon">👋</span>WAVE RIGHT
+        <span class="btn-sub">Right arm</span>
+      </button>
+      <button class="action-btn" id="btn-wave_l" onclick="sendMove('wave_l')">
+        <span class="btn-icon">🤚</span>WAVE LEFT
+        <span class="btn-sub">Left arm</span>
+      </button>
+      <button class="action-btn orange" id="btn-bow" onclick="sendMove('bow')">
+        <span class="btn-icon">🙇</span>BOW
+        <span class="btn-sub">Forward lean</span>
+      </button>
+      <button class="action-btn orange" id="btn-squat" onclick="sendMove('squat')">
+        <span class="btn-icon">⬇</span>SQUAT
+        <span class="btn-sub">Knee flex</span>
+      </button>
+      <button class="action-btn" id="btn-arms_out" onclick="sendMove('arms_out')">
+        <span class="btn-icon">🤲</span>ARMS OUT
+        <span class="btn-sub">Spread wide</span>
+      </button>
+      <button class="action-btn blue" id="btn-demo" onclick="sendMove('demo')">
+        <span class="btn-icon">▶</span>FULL DEMO
+        <span class="btn-sub">All moves</span>
+      </button>
+      <button class="action-btn red" onclick="sendMove('stop')">
+        <span class="btn-icon">⬛</span>STOP
+        <span class="btn-sub">Freeze all</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- GREET PANEL -->
+  <div class="panel" style="grid-column: 1 / -1;">
+    <div class="panel-header">
+      <span class="panel-title">Greeter Sequences</span>
+      <span class="panel-badge">ARM ACTION CLIENT · NATIVE SDK</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:10px;padding:14px;">
+      <button class="action-btn blue" id="btn-greet_standard" onclick="sendMove('greet_standard')">
+        <span class="btn-icon">🤝</span>STANDARD GREET
+        <span class="btn-sub">Wave → Handshake</span>
+      </button>
+      <button class="action-btn blue" id="btn-greet_enthusiastic" onclick="sendMove('greet_enthusiastic')">
+        <span class="btn-icon">🙌</span>ENTHUSIASTIC
+        <span class="btn-sub">Wave → Dynamic → Applause</span>
+      </button>
+      <button class="action-btn blue" id="btn-greet_vip" onclick="sendMove('greet_vip')">
+        <span class="btn-icon">💫</span>VIP GREET
+        <span class="btn-sub">Formal → Flying Kiss</span>
+      </button>
+      <button class="action-btn" id="btn-wave_high" onclick="sendMove('wave_high')">
+        <span class="btn-icon">👋</span>WAVE HIGH
+        <span class="btn-sub">ID 26</span>
+      </button>
+      <button class="action-btn" id="btn-handshake" onclick="sendMove('handshake')">
+        <span class="btn-icon">🤝</span>HANDSHAKE
+        <span class="btn-sub">ID 27</span>
+      </button>
+      <button class="action-btn" id="btn-applause" onclick="sendMove('applause')">
+        <span class="btn-icon">👏</span>APPLAUSE
+        <span class="btn-sub">ID 17</span>
+      </button>
+      <button class="action-btn" id="btn-dynamic_wave" onclick="sendMove('dynamic_wave')">
+        <span class="btn-icon">✨</span>DYNAMIC WAVE
+        <span class="btn-sub">ID 24</span>
+      </button>
+      <button class="action-btn" id="btn-high_five" onclick="sendMove('high_five')">
+        <span class="btn-icon">🖐</span>HIGH FIVE
+        <span class="btn-sub">ID 18</span>
+      </button>
+      <button class="action-btn" id="btn-flying_kiss" onclick="sendMove('flying_kiss')">
+        <span class="btn-icon">😘</span>FLYING KISS
+        <span class="btn-sub">ID 11</span>
+      </button>
+      <button class="action-btn" id="btn-double_heart" onclick="sendMove('double_heart')">
+        <span class="btn-icon">🫶</span>DOUBLE HEART
+        <span class="btn-sub">ID 20</span>
+      </button>
+      <button class="action-btn" id="btn-hug" onclick="sendMove('hug')">
+        <span class="btn-icon">🤗</span>HUG POSE
+        <span class="btn-sub">ID 19</span>
+      </button>
+      <button class="action-btn orange" id="btn-arm_recover" onclick="sendMove('arm_recover')">
+        <span class="btn-icon">↩</span>ARM RECOVER
+        <span class="btn-sub">ID 99 · Reset</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- RIGHT: Info -->
+  <div style="display:flex;flex-direction:column;gap:16px;">
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">Connection</span>
+        <span class="panel-badge">localhost:8765</span>
+      </div>
+      <div class="panel-body">
+        <div style="font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--text2);line-height:2;">
+          <div>Interface: <span style="color:var(--accent)">lo</span></div>
+          <div>Domain ID: <span style="color:var(--accent)">0</span></div>
+          <div>Motors: <span style="color:var(--accent2)">29</span></div>
+          <div>KP Gains: <span style="color:var(--accent2)">80.0</span></div>
+          <div>KD Gains: <span style="color:var(--accent2)">3.5</span></div>
+          <div>Loop Rate: <span style="color:var(--accent2)">500 Hz</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">Joint Map</span>
+        <span class="panel-badge">G1 29DOF</span>
+      </div>
+      <div class="panel-body" style="font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--text2);line-height:1.8;">
+        <div>0-5: Left leg</div>
+        <div>6-11: Right leg</div>
+        <div>12: Waist yaw</div>
+        <div style="color:var(--accent2)">15: L shoulder pitch ← WAVE L</div>
+        <div>16: L shoulder roll</div>
+        <div>19: L elbow</div>
+        <div style="color:var(--accent2)">22: R shoulder pitch ← WAVE R</div>
+        <div>23: R shoulder roll</div>
+        <div>25: R elbow</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const SERVER = 'http://localhost:8765';
+let logCount = 0;
+let startTime = Date.now();
+let currentBtn = null;
+
+async function sendMove(move) {
+  try {
+    await fetch(SERVER + '/' + move, { mode: 'cors' });
+    setActive(move);
+    addLog('CMD: ' + move.toUpperCase(), 'cmd');
+  } catch(e) {
+    addLog('ERROR: Server not responding — is robot_server.py running?', 'err');
+    document.getElementById('conn-dot').className = 'dot danger';
+    document.getElementById('conn-status').textContent = 'DISCONNECTED';
+  }
+}
+
+function setActive(move) {
+  document.querySelectorAll('.action-btn').forEach(b => b.classList.remove('active'));
+  const btn = document.getElementById('btn-' + move);
+  if (btn) btn.classList.add('active');
+  document.getElementById('mode-val').textContent = move.toUpperCase().replace('_', ' ');
+  document.getElementById('active-label').textContent = move.toUpperCase().replace('_', ' ');
+
+  const subs = {
+    stand: 'All joints at neutral pose',
+    wave_r: 'Right arm — joint 22 sine wave',
+    wave_l: 'Left arm — joint 15 sine wave',
+    bow: 'Hip pitch forward lean',
+    squat: 'Knee flexion cycle',
+    arms_out: 'Shoulder roll spread',
+    demo: 'Full sequence running...',
+    stop: 'All motion stopped',
+    greet_standard: 'Stand → Wave High → Handshake → Recover',
+    greet_enthusiastic: 'Wave High → Dynamic Wave → Applause → Recover',
+    greet_vip: 'Arms Horizontal → Flying Kiss → Recover',
+    wave_high: 'ARM ACTION ID 26 — wave hand high',
+    handshake: 'ARM ACTION ID 27 — handshake pose',
+    applause: 'ARM ACTION ID 17 — applause',
+    dynamic_wave: 'ARM ACTION ID 24 — dynamic light wave',
+    high_five: 'ARM ACTION ID 18 — high five',
+    flying_kiss: 'ARM ACTION ID 11 — double hand flying kiss',
+    double_heart: 'ARM ACTION ID 20 — double hand heart',
+    hug: 'ARM ACTION ID 19 — hug pose',
+    arm_recover: 'ARM ACTION ID 99 — recover initial arm pose'
+  };
+  document.getElementById('active-sub').textContent = subs[move] || '';
+}
+
+function addLog(msg, type) {
+  const area = document.getElementById('log-area');
+  const ts = new Date().toLocaleTimeString('en-US', { hour12: false });
+  const el = document.createElement('div');
+  el.className = 'log-entry log-' + (type || '');
+  el.innerHTML = '<span class="log-ts">[' + ts + ']</span>' + msg;
+  area.appendChild(el);
+  area.scrollTop = area.scrollHeight;
+  logCount++;
+  document.getElementById('log-count').textContent = logCount + ' CMDS';
+}
+
+async function checkConnection() {
+  try {
+    await fetch(SERVER + '/ping', { mode: 'cors' });
+    document.getElementById('conn-dot').className = 'dot active';
+    document.getElementById('conn-status').textContent = 'ROBOT ONLINE';
+    addLog('Connected to robot server on port 8765', 'ok');
+  } catch(e) {
+    document.getElementById('conn-dot').className = 'dot';
+    document.getElementById('conn-status').textContent = 'SERVER OFFLINE';
+    addLog('Cannot reach localhost:8765 — start robot_server.py first', 'err');
+    setTimeout(checkConnection, 3000);
+  }
+}
+
+setInterval(() => {
+  document.getElementById('clock').textContent = new Date().toLocaleTimeString('en-US', { hour12: false });
+  const e = Math.floor((Date.now() - startTime) / 1000);
+  const m = Math.floor(e/60).toString().padStart(2,'0');
+  const s = (e%60).toString().padStart(2,'0');
+  document.getElementById('uptime').textContent = 'T+' + m + ':' + s;
+}, 1000);
+
+checkConnection();
+</script>
+</body>
+</html>
