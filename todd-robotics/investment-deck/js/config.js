@@ -19,6 +19,23 @@ window.SCENARIOS = [
   { label: 'Base', bookings: 6,  avgRev: 1800, opsCost: 600,  fleetGrow: 1, color: '#60a5fa', tagClass: 'b' },
   { label: 'Bull', bookings: 10, avgRev: 2200, opsCost: 800,  fleetGrow: 1, color: '#00e5a0', tagClass: 'g' },
   { label: 'Moon', bookings: 18, avgRev: 3000, opsCost: 1200, fleetGrow: 2, color: '#f59e0b', tagClass: 'gold' },
+  {
+    section: 'Hardware & Longevity',
+    questions: [
+      {
+        n: '16', q: 'Will our skill libraries still work when the G1 is replaced by G2 or G3?',
+        a: `<span class="pill-g">Yes.</span> Skills are written in Python + ROS2 — the universal robotics standard. When Unitree releases G2, we repoint the SDK. The skill library transfers. <strong>Software compounds. Hardware is replaceable.</strong>`,
+      },
+      {
+        n: '17', q: 'What happens to our investment when hardware gets cheaper?',
+        a: `<strong>It gets better.</strong> G1 drops 30–40% per generation (same as every hardware cycle). Our skill library grows in value simultaneously. By Year 3 we buy G2 at $10K and our library runs on it day one. Early operators always win.`,
+      },
+      {
+        n: '18', q: "Are we locked into Unitree?",
+        a: `No. The entire stack — Python, ROS2, DDS communication — is open standard. Skills run on <strong>any ROS2-compatible humanoid</strong>: Unitree, Agility, Figure, Boston Dynamics. We are not locked in. The platform is the asset.`,
+      },
+    ],
+  },
 ];
 
 // ── NAVIGATION STRUCTURE ─────────────────────────────────────────────────────
