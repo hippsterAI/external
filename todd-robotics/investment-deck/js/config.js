@@ -36,6 +36,23 @@ window.SCENARIOS = [
       },
     ],
   },
+  {
+    section: 'Hardware & Longevity',
+    questions: [
+      {
+        n: '16', q: 'Will our skill libraries still work when the G1 is replaced by G2 or G3?',
+        a: `<span class="pill-g">Yes.</span> Skills are written in Python + ROS2 — the universal robotics standard. When Unitree releases G2, we repoint the SDK. The skill library transfers. <strong>Software compounds. Hardware is replaceable.</strong>`,
+      },
+      {
+        n: '17', q: 'What happens to our investment when hardware gets cheaper?',
+        a: `<strong>It gets better.</strong> G1 drops 30-40% per generation. Our skill library grows in value simultaneously. By Year 3 we buy G2 at $10K and our library runs on it day one. Early operators always win.`,
+      },
+      {
+        n: '18', q: 'Are we locked into Unitree?',
+        a: `No. The entire stack — Python, ROS2, DDS — is open standard. Skills run on <strong>any ROS2-compatible humanoid</strong>: Unitree, Agility, Figure, Boston Dynamics. The platform is the asset.`,
+      },
+    ],
+  },
 ];
 
 // ── NAVIGATION STRUCTURE ─────────────────────────────────────────────────────
