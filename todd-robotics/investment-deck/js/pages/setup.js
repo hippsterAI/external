@@ -1,4 +1,4 @@
-function renderSetup() {
+window.renderSetup = function() {
   return `
     <div class="page-header">
       <div class="page-tag">TECHNICAL</div>
